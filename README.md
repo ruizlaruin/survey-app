@@ -80,44 +80,6 @@ bash
 ./vendor/bin/sail artisan route:list
 You should see all the routes listed without errors.
 
-## 📁 Project Structure
-text
-survey-management-app/
-├── app/
-│   ├── Models/
-│   │   ├── Survey.php
-│   │   └── Question.php
-│   └── Http/
-│       └── Controllers/
-│           ├── SurveyController.php
-│           └── QuestionController.php
-├── database/
-│   ├── migrations/
-│   │   ├── create_surveys_table.php
-│   │   ├── create_questions_table.php
-│   │   └── create_survey_question_table.php
-│   └── seeders/
-│       └── DatabaseSeeder.php
-├── resources/
-│   └── views/
-│       ├── surveys/
-│       │   ├── index.blade.php
-│       │   ├── create.blade.php
-│       │   ├── edit.blade.php
-│       │   └── show.blade.php
-│       ├── questions/
-│       │   ├── index.blade.php
-│       │   ├── create.blade.php
-│       │   └── edit.blade.php
-│       ├── layouts/
-│       │   └── app.blade.php
-│       └── welcome.blade.php
-├── routes/
-│   └── web.php
-├── docker-compose.yml
-├── Dockerfile
-├── setup.sh
-└── README.md
 ## 🌐 Available Services
 The Docker environment includes:
 
@@ -204,31 +166,31 @@ Common Issues
 Port already in use:
 
 bash
-# Stop other services using port 80 or change APP_PORT in .env
+### Stop other services using port 80 or change APP_PORT in .env
 APP_PORT=8080
-Docker not running:
+### Docker not running:
 
 Ensure Docker Desktop is running
 
 Restart Docker if needed
 
-Permission errors:
+### Permission errors:
 
 bash
 chmod -R 755 storage bootstrap/cache
-Database connection issues:
+### Database connection issues:
 
 bash
 ./vendor/bin/sail down
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate
-Container won't start:
+### Container won't start:
 
 bash
 docker-compose down
 docker-compose up -d --build
 Reset Everything
-If you encounter issues, you can reset the entire environment:
+### If you encounter issues, you can reset the entire environment:
 
 bash
 ### Stop and remove containers
