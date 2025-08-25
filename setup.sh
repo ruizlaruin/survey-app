@@ -1,5 +1,3 @@
-# setup.sh
-
 echo "Setting up Survey Management App with Laravel Sail..."
 
 # Make sure sail is executable

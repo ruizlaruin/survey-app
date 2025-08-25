@@ -1,13 +1,19 @@
+<!-- resources/views/surveys/index.blade.php -->
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
-    <h1>Surveys</h1>
-    <a href="{{ route('surveys.create') }}" class="btn btn-primary mb-3">Create New Survey</a>
-    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Surveys</h1>
+        <a href="{{ route('surveys.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create New Survey
+        </a>
+    </div>
+
+    @if($surveys->count() > 0)
     <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -21,13 +27,33 @@
                 @foreach($surveys as $survey)
                 <tr>
                     <td>{{ $survey->id }}</td>
-                    <td>{{ $survey->name }}</td>
-                    <td>{{ $survey->questions_count }}</td>
+                    <td>
+                        <a href="{{ route('surveys.show', $survey) }}" class="text-decoration-none">
+                            {{ $survey->name }}
+                        </a>
+                    </td>
+                    <td>
+                        <span class="badge bg-primary">{{ $survey->questions_count }}</span>
+                    </td>
                     <td>{{ $survey->created_at->format('M d, Y H:i') }}</td>
                     <td>{{ $survey->updated_at->format('M d, Y H:i') }}</td>
                     <td>
-                        <a href="{{ route('surveys.show', $survey) }}" class="btn btn-info btn-sm">View</a>
-                        <a href="{{ route('surveys.edit', $survey) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <div class="btn-group" role="group">
+                            <a href="{{ route('surveys.show', $survey) }}" class="btn btn-info btn-sm">
+                                <i class="bi bi-eye"></i> View
+                            </a>
+                            <a href="{{ route('surveys.edit', $survey) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <form action="{{ route('surveys.destroy', $survey) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" 
+                                        onclick="return confirm('Are you sure you want to delete this survey?')">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -35,6 +61,14 @@
         </table>
     </div>
     
-    {{ $surveys->links() }}
+    <div class="d-flex justify-content-center">
+        {{ $surveys->links() }}
+    </div>
+    @else
+    <div class="alert alert-info text-center">
+        <i class="bi bi-info-circle"></i> No surveys found. 
+        <a href="{{ route('surveys.create') }}" class="alert-link">Create your first survey</a>.
+    </div>
+    @endif
 </div>
 @endsection

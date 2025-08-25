@@ -18,7 +18,6 @@ return new class extends Migration
             $table->enum('question_type', ['rating', 'comment-only', 'multiple-choice']);
             $table->timestamps();
             
-            // Indexes for performance
             $table->index('question_type');
             $table->index('created_at');
         });
