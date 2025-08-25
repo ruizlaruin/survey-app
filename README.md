@@ -32,6 +32,7 @@ Step 1: Clone the Repository
 bash
 git clone <your-repository-url>
 cd survey-management-app
+
 Step 2: Run the Automated Setup Script
 bash
 ### Make the setup script executable (Linux/Mac)
