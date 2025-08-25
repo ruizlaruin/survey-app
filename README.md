@@ -1,61 +1,257 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Survey Management System
+A comprehensive Laravel-based survey management application that allows users to create and manage surveys and questions with support for mass operations. Built with scalability in mind to handle up to 1 billion surveys.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+🚀 Features
+✅ Create, edit, and manage surveys
 
-## About Laravel
+✅ Create, edit, and manage questions
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+✅ Assign questions to surveys
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+✅ Mass operations (assign multiple questions to surveys, delete multiple questions)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+✅ Responsive design with Bootstrap
 
-## Learning Laravel
+✅ Vanilla JavaScript for interactive features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+✅ Dockerized development environment
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+✅ Optimized database for large datasets
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+📋 Prerequisites
+Before you begin, ensure you have the following installed:
 
-## Laravel Sponsors
+Docker Desktop (Download here)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Git (Download here)
 
-### Premium Partners
+Composer (Optional, for local development)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+⚡ Quick Setup (Recommended)
+Step 1: Clone the Repository
+bash
+git clone <your-repository-url>
+cd survey-management-app
+Step 2: Run the Automated Setup Script
+bash
+# Make the setup script executable (Linux/Mac)
+chmod +x setup.sh
 
-## Contributing
+# Run the setup script
+./setup.sh
+Windows Users: If you're using Windows, run the setup commands manually:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+bash
+# Start Docker containers
+./vendor/bin/sail up -d
 
-## Code of Conduct
+# Wait for MySQL to be ready, then run:
+./vendor/bin/sail composer install
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan db:seed
+Step 3: Access the Application
+Once the setup completes, access the application at:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Main Application: http://localhost
 
-## Security Vulnerabilities
+MailHog (Email testing): http://localhost:8025
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+🔧 Manual Setup (Alternative)
+If the automated script doesn't work, follow these steps:
 
-## License
+Step 1: Start Docker Containers
+bash
+./vendor/bin/sail up -d
+Step 2: Install PHP Dependencies
+bash
+./vendor/bin/sail composer install
+Step 3: Generate Application Key
+bash
+./vendor/bin/sail artisan key:generate
+Step 4: Run Database Migrations
+bash
+./vendor/bin/sail artisan migrate
+Step 5: Seed Database (Optional)
+bash
+./vendor/bin/sail artisan db:seed
+Step 6: Verify Installation
+bash
+./vendor/bin/sail artisan route:list
+You should see all the routes listed without errors.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+📁 Project Structure
+text
+survey-management-app/
+├── app/
+│   ├── Models/
+│   │   ├── Survey.php
+│   │   └── Question.php
+│   └── Http/
+│       └── Controllers/
+│           ├── SurveyController.php
+│           └── QuestionController.php
+├── database/
+│   ├── migrations/
+│   │   ├── create_surveys_table.php
+│   │   ├── create_questions_table.php
+│   │   └── create_survey_question_table.php
+│   └── seeders/
+│       └── DatabaseSeeder.php
+├── resources/
+│   └── views/
+│       ├── surveys/
+│       │   ├── index.blade.php
+│       │   ├── create.blade.php
+│       │   ├── edit.blade.php
+│       │   └── show.blade.php
+│       ├── questions/
+│       │   ├── index.blade.php
+│       │   ├── create.blade.php
+│       │   └── edit.blade.php
+│       ├── layouts/
+│       │   └── app.blade.php
+│       └── welcome.blade.php
+├── routes/
+│   └── web.php
+├── docker-compose.yml
+├── Dockerfile
+├── setup.sh
+└── README.md
+🌐 Available Services
+The Docker environment includes:
+
+Service	URL/Port	Purpose
+Laravel Application	http://localhost	Main application
+MySQL Database	Port 3306	Database
+Redis Cache	Port 6379	Caching
+MailHog	http://localhost:8025	Email testing (SMTP: Port 1025)
+
+🗄️ Database Configuration
+The application uses MySQL with the following credentials:
+
+Host: mysql
+
+Database: survey_app
+
+Username: sail
+
+Password: password
+
+You can connect to the database using:
+
+bash
+./vendor/bin/sail mysql
+Or use any MySQL client with:
+
+Host: 127.0.0.1
+
+Port: 3306
+
+Username: sail
+
+Password: password
+
+Database: survey_app
+
+📊 Sample Data
+The database seeder creates:
+
+10 sample surveys
+
+50 sample questions
+
+Random assignments between surveys and questions
+
+You can reset the database with:
+
+bash
+./vendor/bin/sail artisan migrate:fresh --seed
+🧪 Testing the Application
+1. Create a Survey
+Go to http://localhost/surveys
+
+Click "Create New Survey"
+
+Fill in the survey name
+
+Select questions to include
+
+Click "Create Survey"
+
+2. Create a Question
+Go to http://localhost/questions
+
+Click "Create New Question"
+
+Fill in question details (name, text, type)
+
+Optionally assign to surveys
+
+Click "Create Question"
+
+3. Mass Operations
+Go to http://localhost/questions
+
+Select multiple questions using checkboxes
+
+Use "Assign to Surveys" to assign them to multiple surveys
+
+Use "Delete Selected" to delete multiple questions at once
+
+❗ Troubleshooting
+Common Issues
+Port already in use:
+
+bash
+# Stop other services using port 80 or change APP_PORT in .env
+APP_PORT=8080
+Docker not running:
+
+Ensure Docker Desktop is running
+
+Restart Docker if needed
+
+Permission errors:
+
+bash
+chmod -R 755 storage bootstrap/cache
+Database connection issues:
+
+bash
+./vendor/bin/sail down
+./vendor/bin/sail up -d
+./vendor/bin/sail artisan migrate
+Container won't start:
+
+bash
+docker-compose down
+docker-compose up -d --build
+Reset Everything
+If you encounter issues, you can reset the entire environment:
+
+bash
+# Stop and remove containers
+./vendor/bin/sail down
+
+# Remove volumes (WARNING: This will delete all data)
+docker volume rm survey-management-app_sail-mysql survey-management-app_sail-redis
+
+# Start fresh
+./vendor/bin/sail up -d
+./vendor/bin/sail artisan migrate --seed
+⚡ Performance Features
+This application is optimized for large datasets:
+
+Database indexes on all foreign keys
+
+Pagination for large result sets
+
+Efficient query design
+
+MySQL configuration optimized for large tables
+
+Support for 1 billion+ surveys
+
+📄 License
+This project is created for the GuildQuality Developer Coding Exercise.

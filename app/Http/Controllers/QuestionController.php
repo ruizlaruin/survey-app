@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\Survey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
@@ -14,7 +15,9 @@ class QuestionController extends Controller
                             ->orderBy('created_at', 'desc')
                             ->paginate(20);
         
-        return view('questions.index', compact('questions'));
+        $allSurveys = Survey::all();
+        
+        return view('questions.index', compact('questions', 'allSurveys'));
     }
 
     public function create()
@@ -86,14 +89,25 @@ class QuestionController extends Controller
             'survey_ids.*' => 'exists:surveys,id'
         ]);
 
-        $questions = Question::whereIn('id', $validated['question_ids'])->get();
-        
-        foreach ($questions as $question) {
-            $question->surveys()->syncWithoutDetaching($validated['survey_ids']);
-        }
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('questions.index')
-                         ->with('success', 'Questions assigned to surveys successfully.');
+            $questions = Question::whereIn('id', $validated['question_ids'])->get();
+            
+            foreach ($questions as $question) {
+                $question->surveys()->syncWithoutDetaching($validated['survey_ids']);
+            }
+
+            DB::commit();
+
+            return redirect()->route('questions.index')
+                             ->with('success', count($validated['question_ids']) . ' questions assigned to ' . count($validated['survey_ids']) . ' surveys successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('questions.index')
+                             ->with('error', 'Failed to assign questions: ' . $e->getMessage());
+        }
     }
 
     public function massDelete(Request $request)
@@ -103,9 +117,20 @@ class QuestionController extends Controller
             'question_ids.*' => 'exists:questions,id'
         ]);
 
-        Question::whereIn('id', $validated['question_ids'])->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('questions.index')
-                         ->with('success', 'Questions deleted successfully.');
+            $count = Question::whereIn('id', $validated['question_ids'])->delete();
+
+            DB::commit();
+
+            return redirect()->route('questions.index')
+                             ->with('success', $count . ' questions deleted successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('questions.index')
+                             ->with('error', 'Failed to delete questions: ' . $e->getMessage());
+        }
     }
 }
