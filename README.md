@@ -1,7 +1,7 @@
-Survey Management System
+# Survey Management System
 A comprehensive Laravel-based survey management application that allows users to create and manage surveys and questions with support for mass operations. Built with scalability in mind to handle up to 1 billion surveys.
 
-🚀 Features
+## 🚀 Features
 ✅ Create, edit, and manage surveys
 
 ✅ Create, edit, and manage questions
@@ -18,7 +18,7 @@ A comprehensive Laravel-based survey management application that allows users to
 
 ✅ Optimized database for large datasets
 
-📋 Prerequisites
+## 📋 Prerequisites
 Before you begin, ensure you have the following installed:
 
 Docker Desktop (Download here)
@@ -27,25 +27,25 @@ Git (Download here)
 
 Composer (Optional, for local development)
 
-⚡ Quick Setup (Recommended)
+## ⚡ Quick Setup (Recommended)
 Step 1: Clone the Repository
 bash
 git clone <your-repository-url>
 cd survey-management-app
 Step 2: Run the Automated Setup Script
 bash
-# Make the setup script executable (Linux/Mac)
+### Make the setup script executable (Linux/Mac)
 chmod +x setup.sh
 
-# Run the setup script
+### Run the setup script
 ./setup.sh
 Windows Users: If you're using Windows, run the setup commands manually:
 
 bash
-# Start Docker containers
+### Start Docker containers
 ./vendor/bin/sail up -d
 
-# Wait for MySQL to be ready, then run:
+### Wait for MySQL to be ready, then run:
 ./vendor/bin/sail composer install
 ./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan migrate
@@ -57,7 +57,7 @@ Main Application: http://localhost
 
 MailHog (Email testing): http://localhost:8025
 
-🔧 Manual Setup (Alternative)
+## 🔧 Manual Setup (Alternative)
 If the automated script doesn't work, follow these steps:
 
 Step 1: Start Docker Containers
@@ -80,7 +80,7 @@ bash
 ./vendor/bin/sail artisan route:list
 You should see all the routes listed without errors.
 
-📁 Project Structure
+## 📁 Project Structure
 text
 survey-management-app/
 ├── app/
@@ -118,7 +118,7 @@ survey-management-app/
 ├── Dockerfile
 ├── setup.sh
 └── README.md
-🌐 Available Services
+## 🌐 Available Services
 The Docker environment includes:
 
 Service	URL/Port	Purpose
@@ -127,7 +127,7 @@ MySQL Database	Port 3306	Database
 Redis Cache	Port 6379	Caching
 MailHog	http://localhost:8025	Email testing (SMTP: Port 1025)
 
-🗄️ Database Configuration
+## 🗄️ Database Configuration
 The application uses MySQL with the following credentials:
 
 Host: mysql
@@ -154,7 +154,7 @@ Password: password
 
 Database: survey_app
 
-📊 Sample Data
+## 📊 Sample Data
 The database seeder creates:
 
 10 sample surveys
@@ -167,7 +167,7 @@ You can reset the database with:
 
 bash
 ./vendor/bin/sail artisan migrate:fresh --seed
-🧪 Testing the Application
+## 🧪 Testing the Application
 1. Create a Survey
 Go to http://localhost/surveys
 
@@ -199,7 +199,7 @@ Use "Assign to Surveys" to assign them to multiple surveys
 
 Use "Delete Selected" to delete multiple questions at once
 
-❗ Troubleshooting
+## ❗ Troubleshooting
 Common Issues
 Port already in use:
 
@@ -231,16 +231,16 @@ Reset Everything
 If you encounter issues, you can reset the entire environment:
 
 bash
-# Stop and remove containers
+### Stop and remove containers
 ./vendor/bin/sail down
 
-# Remove volumes (WARNING: This will delete all data)
+### Remove volumes (WARNING: This will delete all data)
 docker volume rm survey-management-app_sail-mysql survey-management-app_sail-redis
 
-# Start fresh
+### Start fresh
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate --seed
-⚡ Performance Features
+## ⚡ Performance Features
 This application is optimized for large datasets:
 
 Database indexes on all foreign keys
@@ -253,5 +253,5 @@ MySQL configuration optimized for large tables
 
 Support for 1 billion+ surveys
 
-📄 License
+## 📄 License
 This project is created for the GuildQuality Developer Coding Exercise.
